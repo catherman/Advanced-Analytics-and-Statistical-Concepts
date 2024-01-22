@@ -1,1 +1,1 @@
-# Statistical-Concepts-Q-A-PCA-eigenvalues-covariance-matrix-MLE-ISOMAP-Image-recognition
+# Statistical-Concepts-QA-PCA-eigenvalues-covariance-matrix-MLE-ISOMAP-Image-recognition
