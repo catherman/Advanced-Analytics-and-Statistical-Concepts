@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ### 4. Eigenfaces and simple face recognition [25 points].This question is a simplified illustration of using PCA for face recognition. We will use a subset of data from the famous Yale Face dataset.
-
-# In[1]:
-
+# ### Eigenfaces and simple face recognition. 
+# This is a simplified analysis using PCA for face recognition. 
+# We will use a subset of data from the famous Yale Face dataset.
 
 import numpy as np
 import pandas as pd
@@ -13,11 +12,8 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
 
-# ### (a) (10 points) Perform analysis on the Yale face dataset for Subject 1 and Subject 2, respectively, using all the images EXCEPT for the two pictures named subject01-test.gif and subject02-test.gif. Plot the first 6 eigenfaces for each subject. When visualizing, please reshape the eigenvectors into proper images. Please explain can you see any patterns in the top 6 eigenfaces?
-# 
-
-# In[2]:
-
+# First, we will perform PCA analysis on the Yale face dataset for Subject 1 and Subject 2, respectively, 
+# using all the images EXCEPT for the two pictures named subject01-test.gif and subject02-test.gif. Plot the first 6 eigenfaces for each subject. When visualizing, please reshape the eigenvectors into proper images. Please explain can you see any patterns in the top 6 eigenfaces?
 
 p_1 = ["subject01.leftlight.gif","subject01.noglasses.gif",
                  "subject01.normal.gif","subject01.rightlight.gif",
@@ -56,10 +52,6 @@ axes[1][2].set_title('eigenfaces: 6', fontsize=10)
 
 plt.show()
 plt.savefig('Q4-ef-s1.pdf')
-
-
-# In[3]:
-
 
 p_2 = ["subject02.glasses.gif","subject02.happy.gif",
                  "subject02.leftlight.gif","subject02.noglasses.gif",
@@ -100,10 +92,7 @@ plt.show()
 plt.savefig('Q4-ef-s2.pdf')
 
 
-# ### (b) (10 points)  Face recognition.
-
-# In[4]:
-
+# ### (b) Face recognition.
 
 t1_list = ["subject01-test.gif"]
 lst_2 = []
@@ -138,15 +127,8 @@ for r in range(2):
 s_df = pd.DataFrame(W, index=['eg_face_1', 'eg_face_2'], columns=['test 1', 'test 2'])
 s_df
 
-
-# In[5]:
-
-
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 s_df
-
-
-# In[8]:
 
 
 plt.figure()  
