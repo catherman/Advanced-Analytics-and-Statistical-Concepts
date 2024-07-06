@@ -5,9 +5,9 @@ Using PCA, Eigenvalues, Covariance matrix, Maximum Likelihood Estimation (MLE), 
 Summary
 
 Part 1.  Application of Concepts in Advanced Analytics
-	1.      PCA: Food consumption in European countries
-	2.      Order of faces using ISOMAP
-	3.      PCA & Eigenfaces for Simple Face Recognition
+  1.      PCA: Food consumption in European countries
+  2.      Order of faces using ISOMAP
+  3.      PCA & Eigenfaces for Simple Face Recognition
 
 Part 2. Statistical Theory & Derivation of Concepts
   1.      Principal Component Analysis (PCA) 
