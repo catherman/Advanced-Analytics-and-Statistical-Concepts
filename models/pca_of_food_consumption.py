@@ -1,30 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# 2. PCA: Food consumption in European countries [20 points].
+#  PCA: Food consumption in European countries.
 # 
 # The data food-consumption.csv contains 16 countries in Europe and their consumption for 20 food items, such as tea, jam, coffee, yogurt, and others. We will perform principal component analysis to explore the data. In this question, please implement PCA by writing your own code (you can use any basic packages,
-# such as numerical linear algebra, reading data, in your file).
+# such as numerical linear algebra, reading data, in your file). We will approach this problem from two directions:
 # 
-# First, we will perform PCA analysis on the data by treating each country’s food consumption as their
+# A. First, we will perform PCA analysis on the data by treating each country’s food consumption as their
 # “feature” vectors. In other words, we will find weight vectors to combine 20 food-item consumptions for
-# each country.
-# 
-#     (a) (10 points) For this problem of performing PCA on countries by treating each country’s food consumption
-#     as their “feature” vectors, explain how the data matrix is set-up in this case (e.g., the columns and
-#     the rows of the matrix correspond to what). Now extract the first two principal components for each
-#     data point (thus, this means we will represent each data point using a two-dimensional vector). Draw a
-#     scatter plot of two-dimensional representations of the countries using their two principal components.
-#     Mark the countries on the plot (you can do this by hand if you want). Please explain any pattern you
-#     observe in the scatter plot.
+# each country.  For this part of the problem (performing PCA on countries), we will treating each country’s food consumption
+# as their “feature” vectors.  We will then: 
+#       - Extract the first two principal components for each data point (thus, this means we will represent 
+#         each data point using a two-dimensional vector). 
+#       - Draw a scatter plot of two-dimensional representations of the countries using their two principal components.
+#       - Mark the countries on the plot & explain any observed patterns.
 #     
-# 
-#     (b) (10 points) Now, we will perform PCA analysis on the data by treating country consumptions as “feature” vectors for each food item. In other words, we will now find weight vectors to combine country consumptions for each food item to perform PCA another way. Project data to obtain their two principle components (thus, again each data point – for each food item – can be represented using a two-dimensional vector). Draw a scatter plot of food items. Mark the food items on the plot (you can do this by hand if you want). Please explain any pattern you observe in the scatter plot.
-#     
-#     
-
-# In[1]:
-
+#  B. Next, we will perform PCA analysis on the data by treating country consumptions as “feature” vectors 
+#  for each food item. In other words, we will now find weight vectors to combine country consumptions 
+#  for each food item to perform PCA another way. As in section A, we will:
+#        - Project data to obtain their two principle components (thus, again each data point – for each food item – can be represented using a two-dimensional vector). 
+#        - Draw a scatter plot of food items. Mark the food items on the plot (you can do this by hand if you want). 
+#        - Explain any pattern you observe in the scatter plot.
 
 import pandas as pd
 import numpy as np
