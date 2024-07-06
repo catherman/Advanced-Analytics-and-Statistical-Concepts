@@ -1,46 +1,33 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# 3. Order of faces using ISOMAP [25 points]
+# Order of faces using ISOMAP 
 # 
-# This question aims to reproduce the ISOMAP algorithm results in the original paper for ISOMAP, J.B.
-# Tenenbaum, V. de Silva, and J.C. Langford, Science 290 (2000) 2319-2323 that we have also seen in the
-# lecture as an exercise (isn’t this exciting to go through the process of generating results for a high-impact
-# research paper!)
+# This analysis aims to reproduce the ISOMAP algorithm results in the original paper for ISOMAP, J.B.
+# Tenenbaum, V. de Silva, and J.C. Langford, Science 290 (2000) 2319-2323.
 # 
 # The file isomap.mat (or isomap.dat) contains 698 images, corresponding to different poses of the same
 # face. Each image is given as a 64 × 64 luminosity map, hence represented as a vector in R4096. This vector
-# is stored as a row in the file. (This is one of the datasets used in the original paper.) In this question, you
-# are expected to implement the ISOMAP algorithm by coding it up yourself. 
+# is stored as a row in the file. (This is one of the datasets used in the original paper.) For this analysis, we
+# will implement the ISOMAP algorithm by scratch. 
 # 
-# Using Euclidean distance (i.e., in this case, a distance in R4096) to construct the ϵ-ISOMAP (follow the
-# instructions in the slides.) You will tune the ϵ parameter to achieve the most reasonable performance. Please
-# note that this is different from K-ISOMAP, where each node has exactly K nearest neighbors.
+# Using Euclidean distance (i.e., in this case, a distance in R4096) to construct the ϵ-ISOMAP.
+# We will tune the ϵ parameter to achieve the most reasonable performance. (Note: this is different from K-ISOMAP, 
+where each node has exactly K nearest neighbors.)
 # 
-#     (a) (5 points) Visualize the nearest neighbor graph (you can either show the adjacency matrix (e.g., as an image), or visualize the graph similar to the lecture slides using graph visualization packages such as Gephi (https://gephi.org) and illustrate a few images corresponds to nodes at different parts of the graph, e.g., mark them by hand or use software packages).
+# In the code that folllows, we will: 
+#     (a) Visualize the nearest neighbor graph (with the adjacency matrix (e.g., as an image), 
 # 
-#     (b) (10 points) Implement the ISOMAP algorithm yourself to obtain a two-dimensional low-dimensiona embedding. Plot the embeddings using a scatter plot, similar to the plots in lecture slides. Find a few images in the embedding space and show what these images look like and specify the face locations on the scatter plot. Comment on do you see any visual similarity among them and their arrangement, similar to what you seen in the paper?
+#     (b) Implement the ISOMAP algorithm (from scratch) to obtain a two-dimensional low-dimensiona embedding.
+#         - visualize the embeddings using a scatter plot, 
+#         - identify a few images in the embedding space (mark w/ red x) 
+#         - show what these images look like and specify the face locations on the scatter plot. 
+#         - observe whether there are any visual similarity among the images and their arrangement, 
+#           similar to what you seen in the paper.
 # 
-#     (c) (10 points) Perform PCA (you can now use your implementation written in Question 1) on the images and project them into the top 2 principal components. Again show them on a scatter plot. Explain whether or you see a more meaningful projection using ISOMAP than PCA.  
-
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from scipy.io import loadmat
-# from scipy.spatial.distance import cdist
-# import scipy.sparse.csgraph as csgraph
-# import matplotlib.gridspec as gridspec
-# from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from scipy.io import loadmat
-# from scipy.spatial.distance import cdist
-# import scipy.sparse.csgraph as csgraph
-# import matplotlib.gridspec as gridspec
-# from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
-# In[1]:
-
+#     (c) Perform PCA on the images and project them into the top 2 principal components. 
+#         - visualize on a scatter plot. 
+#         - Compare quality of projection using ISOMAP vs. PCA.  
 
 import numpy as np
 from sklearn.metrics import pairwise_distances
@@ -51,10 +38,6 @@ from scipy.linalg import eigh
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from PIL import Image
-
-
-# In[2]:
-
 
 data = loadmat('isomap.mat')['images']
 
@@ -101,10 +84,6 @@ fig_graph.suptitle('Adjacency Matrix Weighted, Lp{}'.format(lp))
 fig_graph.savefig('Q3_Adjacency-Matrix-Weighted-Lp{}.pdf'.format(lp))
 plt.show()  
 
-
-# In[3]:
-
-
 def pairs_distances_matrix_C_processor ():
     d = csgraph.shortest_path(G)
     d = (d + d.T)/2
@@ -145,10 +124,6 @@ ax3.imshow(eval('img_'+str(3)), cmap=plt.get_cmap('gray'))
 ax3.axis('off')
 fig.savefig('Q3_lp{}-2-d embedding.pdf'.format(lp))
 
-
-# In[4]:
-
-
 fig, ax = plt.subplots()
 ax.scatter(Z[:, 0], Z[:, 1], s=5)
 ax.set_aspect('equal')
@@ -164,36 +139,6 @@ for ff in range(n):
 ax.set_title('LP{}: 2-d manifold, All images'.format(lp))
 plt.savefig('Q3_2-d manifold, All images-lp{}.pdf'.format(lp), dpi=300)
 plt.show()
-
-
-# def PCA_processor (data):
-#     mu = np.mean(data, axis=1, keepdims=True)
-#     d_mean = data - mu
-#     covariance_matrix = np.cov(d_mean)
-#     eigenvalues, eigenvectors = np.linalg.eigh(covariance_matrix)
-#     sorted_indices = np.argsort(eigenvalues)[::-1]
-#     eigenvectors = eigenvectors[:, sorted_indices]
-#     eigenvalues = eigenvalues[sorted_indices]
-#     top_eigenvectors = eigenvectors[:, :2]
-#     Zpca = np.dot(d_mean.T, top_eigenvectors)
-#     return Zpca
-# 
-# Zpca = PCA_processor (data)
-# Zpca2=(Zpca*-1)
-# 
-# figpca, axpca = plt.subplots()
-# axpca.scatter(Zpca2[:, 0], Zpca2[:, 1], s=8)
-# axpca.set_aspect('equal')
-# 
-# for ii in range(n):
-#     img = Image.fromarray((data[:, ii].reshape(64, 64) * 255).astype('uint8'), 'L')
-#     img = OffsetImage(img, cmap='gray', zoom=0.1)
-#     axpca.add_artist(AnnotationBbox(img, (Zpca2[ii, 0], Zpca2[ii, 1]), frameon=False))
-# axpca.set_title('PCA: First 2 principal components, all images')
-# figpca.savefig('Q3_all-images-pca.pdf', dpi=300)
-
-# In[6]:
-
 
 def PCA_processor (data):
     mu = np.mean(data, axis=1, keepdims=True)
